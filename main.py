@@ -49,8 +49,8 @@ def generate_dashboard():
 
     for s in stocks:
         try:
-            close_val = float(str(s['close']).replace(',', ''))
-            open_val = float(str(s['open']).replace(',', ''))
+            close_val = float(str(s.get('close', '0')).replace(',', ''))
+            open_val = float(str(s.get('open', '0')).replace(',', ''))
             is_up = close_val >= open_val
         except:
             is_up = True
@@ -58,13 +58,14 @@ def generate_dashboard():
         card_class = "card-up" if is_up else "card-down"
         val_class = "value-up" if is_up else "value-down"
         
-        symbol_val = s.get('symbol', '-')
-        open_val_str = s.get('open', '-')
-        close_price_val = s.get('close', '-')
-        target_price_val = s.get('targetPrice', '-')
-        diff_val = s.get('diff', '0.00%')
-        volume_val = s.get('volume', '-')
-        trend_text = s.get('trendPrice', 'UP')
+        # ดึงค่าผ่าน .get() ป้องกันข้อมูลหลุดหรือเป็นค่าว่าง
+        symbol_val = str(s.get('symbol', '-'))
+        open_val_str = str(s.get('open', '-'))
+        close_price_val = str(s.get('close', '-'))
+        target_price_val = str(s.get('targetPrice', '-'))
+        diff_val = str(s.get('diff', '0.00%'))
+        volume_val = str(s.get('volume', '-'))
+        trend_text = str(s.get('trendPrice', 'UP'))
 
         is_diff_positive = diff_val.startswith("+")
         diff_color_class = "value-down" if is_diff_positive else "value-up"
@@ -82,15 +83,15 @@ def generate_dashboard():
                     <span class="value">{close_price_val}</span>
                 </div>
                 <div class="cell">
-                    <span class="label">Target_Price(Target/Close)</span>
+                    <span class="label">TARGET_PRICE(TARGET/CLOSE)</span>
                     <span class="value">{target_price_val} <span class="{diff_color_class}" style="font-size: 9pt;">({diff_val})</span></span>
                 </div>
                 <div class="cell">
-                    <span class="label">Yesterday_VoL</span>
+                    <span class="label">YESTERDAY_VOL</span>
                     <span class="value">{volume_val}</span>
                 </div>
                 <div class="cell">
-                    <span class="label">Trend_Price(Close/Avg)</span>
+                    <span class="label">TREND_PRICE(CLOSE/AVG)</span>
                     <span class="value {val_class}">{trend_text}</span>
                 </div>
             </div>

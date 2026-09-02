@@ -21,23 +21,27 @@ def generate_dashboard():
     <head>
     <meta charset="UTF-8">
     <style>
-        @page {{ size: A4 portrait; margin: 15mm; background-color: #0b0f19; }}
+        @page {{ size: A4 portrait; margin: 12mm; background-color: #0b0f19; }}
         body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #0b0f19; color: #f3f4f6; margin: 0; padding: 0; box-sizing: border-box; }}
         *, *::before, *::after {{ box-sizing: border-box; }}
-        .header {{ text-align: center; margin-bottom: 25px; border-bottom: 1px solid #1f2937; padding-bottom: 18px; }}
-        .title {{ font-size: 22pt; font-weight: 800; color: #ffffff; margin: 0; letter-spacing: 1.5px; }}
-        .subtitle {{ font-size: 9.5pt; color: #9ca3af; margin-top: 8px; font-weight: 500; letter-spacing: 0.5px; }}
-        .card {{ background: linear-gradient(135deg, #111827 0%, #1f2937 100%); margin-bottom: 12px; border-radius: 10px; width: 100%; display: table; border-collapse: collapse; overflow: hidden; border: 1px solid #374151; }}
+        .header {{ text-align: center; margin-bottom: 20px; border-bottom: 1px solid #1f2937; padding-bottom: 15px; }}
+        .title {{ font-size: 20pt; font-weight: 800; color: #ffffff; margin: 0; letter-spacing: 1.5px; }}
+        .subtitle {{ font-size: 9pt; color: #9ca3af; margin-top: 6px; font-weight: 500; letter-spacing: 0.5px; }}
+        
+        /* ใช้ Flexbox จัดเรียงการ์ด ป้องกันข้อมูลหลุดบรรทัด */
+        .card {{ background: linear-gradient(135deg, #111827 0%, #1f2937 100%); margin-bottom: 10px; border-radius: 8px; width: 100%; display: flex; align-items: center; overflow: hidden; border: 1px solid #374151; padding: 10px 14px; }}
         .card-up {{ border-left: 6px solid #10b981; }}
         .card-down {{ border-left: 6px solid #ef4444; }}
-        .row {{ display: table-row; }}
-        .cell {{ display: table-cell; padding: 14px 8px; vertical-align: middle; }}
-        .symbol {{ font-size: 13pt; font-weight: bold; width: 18%; color: #ffffff; }}
-        .label {{ font-size: 6.5pt; color: #9ca3af; display: block; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.3px; }}
-        .value {{ font-size: 10.5pt; font-weight: bold; color: #f9fafb; }}
+        
+        .cell-symbol {{ width: 22%; font-size: 12pt; font-weight: bold; color: #ffffff; padding-right: 5px; }}
+        .cell-item {{ width: 15.5%; padding: 0 4px; }}
+        .cell-trend {{ width: 16%; padding-left: 4px; text-align: right; }}
+
+        .label {{ font-size: 5.5pt; color: #9ca3af; display: block; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.3px; }}
+        .value {{ font-size: 9.5pt; font-weight: bold; color: #f9fafb; }}
         .value-up {{ color: #34d399; }}
         .value-down {{ color: #f87171; }}
-        .footer {{ margin-top: 25px; text-align: center; font-size: 8pt; color: #6b7280; letter-spacing: 0.5px; }}
+        .footer {{ margin-top: 20px; text-align: center; font-size: 7.5pt; color: #6b7280; letter-spacing: 0.5px; }}
     </style>
     </head>
     <body>
@@ -58,7 +62,6 @@ def generate_dashboard():
         card_class = "card-up" if is_up else "card-down"
         val_class = "value-up" if is_up else "value-down"
         
-        # ดึงค่าผ่าน .get() ป้องกันข้อมูลหลุดหรือเป็นค่าว่าง
         symbol_val = str(s.get('symbol', '-'))
         open_val_str = str(s.get('open', '-'))
         close_price_val = str(s.get('close', '-'))
@@ -72,28 +75,26 @@ def generate_dashboard():
 
         html_content += f"""
         <div class="card {card_class}">
-            <div class="row">
-                <div class="cell symbol">{symbol_val}</div>
-                <div class="cell">
-                    <span class="label">OPEN</span>
-                    <span class="value">{open_val_str}</span>
-                </div>
-                <div class="cell">
-                    <span class="label">CLOSE</span>
-                    <span class="value">{close_price_val}</span>
-                </div>
-                <div class="cell">
-                    <span class="label">TARGET_PRICE(TARGET/CLOSE)</span>
-                    <span class="value">{target_price_val} <span class="{diff_color_class}" style="font-size: 9pt;">({diff_val})</span></span>
-                </div>
-                <div class="cell">
-                    <span class="label">YESTERDAY_VOL</span>
-                    <span class="value">{volume_val}</span>
-                </div>
-                <div class="cell">
-                    <span class="label">TREND_PRICE(CLOSE/AVG)</span>
-                    <span class="value {val_class}">{trend_text}</span>
-                </div>
+            <div class="cell-symbol">{symbol_val}</div>
+            <div class="cell-item">
+                <span class="label">OPEN</span>
+                <span class="value">{open_val_str}</span>
+            </div>
+            <div class="cell-item">
+                <span class="label">CLOSE</span>
+                <span class="value">{close_price_val}</span>
+            </div>
+            <div class="cell-item" style="width: 21%;">
+                <span class="label">TARGET_PRICE(TARGET/CLOSE)</span>
+                <span class="value">{target_price_val} <span class="{diff_color_class}" style="font-size: 8pt;">({diff_val})</span></span>
+            </div>
+            <div class="cell-item" style="width: 18%;">
+                <span class="label">YESTERDAY_VOL</span>
+                <span class="value">{volume_val}</span>
+            </div>
+            <div class="cell-trend">
+                <span class="label">TREND_PRICE(CLOSE/AVG)</span>
+                <span class="value {val_class}">{trend_text}</span>
             </div>
         </div>
         """

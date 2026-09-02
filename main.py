@@ -62,6 +62,10 @@ def generate_dashboard():
         target_price_val = s.get('targetPrice', '-')
         diff_val = s.get('diff', '0.00%')
 
+        # เงื่อนไขสี Target: ถ้าบวก (+) คือห่างจากเป้า (แดง), ถ้าติดลบ (-) คือผ่าน/ถึงเป้าแล้ว (เขียว)
+        is_diff_positive = diff_val.startswith("+")
+        diff_color_class = "value-down" if is_diff_positive else "value-up"
+
         html_content += f"""
         <div class="card {card_class}">
             <div class="row">
@@ -76,7 +80,7 @@ def generate_dashboard():
                 </div>
                 <div class="cell">
                     <span class="label">TargetPrice(Target/Close)</span>
-                    <span class="value">{target_price_val} <span class="{val_class}" style="font-size: 9pt;">({diff_val})</span></span>
+                    <span class="value">{target_price_val} <span class="{diff_color_class}" style="font-size: 9pt;">({diff_val})</span></span>
                 </div>
                 <div class="cell">
                     <span class="label">YesterdayVoL</span>

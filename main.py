@@ -33,7 +33,7 @@ def generate_dashboard():
         .row {{ display: table-row; }}
         .cell {{ display: table-cell; padding: 14px 10px; vertical-align: middle; }}
         .symbol {{ font-size: 13.5pt; font-weight: bold; width: 20%; color: #ffffff; }}
-        .label {{ font-size: 7pt; color: #9ca3af; display: block; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px; }}
+        .label {{ font-size: 6.5pt; color: #9ca3af; display: block; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.3px; }}
         .value {{ font-size: 11pt; font-weight: bold; color: #f9fafb; }}
         .value-up {{ color: #34d399; }}
         .value-down {{ color: #f87171; }}
@@ -73,15 +73,15 @@ def generate_dashboard():
                     <span class="value">{close_price_val}</span>
                 </div>
                 <div class="cell">
-                    <span class="label">TARGET</span>
+                    <span class="label">TargetPrice(Target/Close)</span>
                     <span class="value {val_class}">{s['diff']}</span>
                 </div>
                 <div class="cell">
-                    <span class="label">VOLUME ($)</span>
+                    <span class="label">YesterdayVoL</span>
                     <span class="value">{s['volume']}</span>
                 </div>
                 <div class="cell">
-                    <span class="label">TREND</span>
+                    <span class="label">TrendPrice(Close/Avg)</span>
                     <span class="value {val_class}">{trend_text}</span>
                 </div>
             </div>

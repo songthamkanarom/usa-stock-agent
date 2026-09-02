@@ -31,10 +31,10 @@ def generate_dashboard():
         .card-up {{ border-left: 6px solid #10b981; }}
         .card-down {{ border-left: 6px solid #ef4444; }}
         .row {{ display: table-row; }}
-        .cell {{ display: table-cell; padding: 14px 10px; vertical-align: middle; }}
-        .symbol {{ font-size: 13.5pt; font-weight: bold; width: 20%; color: #ffffff; }}
+        .cell {{ display: table-cell; padding: 14px 8px; vertical-align: middle; }}
+        .symbol {{ font-size: 13pt; font-weight: bold; width: 18%; color: #ffffff; }}
         .label {{ font-size: 6.5pt; color: #9ca3af; display: block; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.3px; }}
-        .value {{ font-size: 11pt; font-weight: bold; color: #f9fafb; }}
+        .value {{ font-size: 10.5pt; font-weight: bold; color: #f9fafb; }}
         .value-up {{ color: #34d399; }}
         .value-down {{ color: #f87171; }}
         .footer {{ margin-top: 25px; text-align: center; font-size: 8pt; color: #6b7280; letter-spacing: 0.5px; }}
@@ -59,6 +59,8 @@ def generate_dashboard():
         val_class = "value-up" if is_up else "value-down"
         trend_text = s.get('trendPrice', 'UP')
         close_price_val = s.get('close', '0')
+        target_price_val = s.get('targetPrice', '-')
+        diff_val = s.get('diff', '0.00%')
 
         html_content += f"""
         <div class="card {card_class}">
@@ -74,7 +76,7 @@ def generate_dashboard():
                 </div>
                 <div class="cell">
                     <span class="label">TargetPrice(Target/Close)</span>
-                    <span class="value {val_class}">{s['diff']}</span>
+                    <span class="value">{target_price_val} <span class="{val_class}" style="font-size: 9pt;">({diff_val})</span></span>
                 </div>
                 <div class="cell">
                     <span class="label">YesterdayVoL</span>

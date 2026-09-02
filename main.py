@@ -57,22 +57,25 @@ def generate_dashboard():
 
         card_class = "card-up" if is_up else "card-down"
         val_class = "value-up" if is_up else "value-down"
-        trend_text = s.get('trendPrice', 'UP')
-        close_price_val = s.get('close', '0')
+        
+        symbol_val = s.get('symbol', '-')
+        open_val_str = s.get('open', '-')
+        close_price_val = s.get('close', '-')
         target_price_val = s.get('targetPrice', '-')
         diff_val = s.get('diff', '0.00%')
+        volume_val = s.get('volume', '-')
+        trend_text = s.get('trendPrice', 'UP')
 
-        # เงื่อนไขสี Target: ถ้าบวก (+) คือห่างจากเป้า (แดง), ถ้าติดลบ (-) คือผ่าน/ถึงเป้าแล้ว (เขียว)
         is_diff_positive = diff_val.startswith("+")
         diff_color_class = "value-down" if is_diff_positive else "value-up"
 
         html_content += f"""
         <div class="card {card_class}">
             <div class="row">
-                <div class="cell symbol">{s['symbol']}</div>
+                <div class="cell symbol">{symbol_val}</div>
                 <div class="cell">
                     <span class="label">OPEN</span>
-                    <span class="value">{s['open']}</span>
+                    <span class="value">{open_val_str}</span>
                 </div>
                 <div class="cell">
                     <span class="label">CLOSE</span>
@@ -84,7 +87,7 @@ def generate_dashboard():
                 </div>
                 <div class="cell">
                     <span class="label">Yesterday_VoL</span>
-                    <span class="value">{s['volume']}</span>
+                    <span class="value">{volume_val}</span>
                 </div>
                 <div class="cell">
                     <span class="label">Trend_Price(Close/Avg)</span>

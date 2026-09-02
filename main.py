@@ -79,15 +79,15 @@ def generate_dashboard():
                     <span class="value">{close_price_val}</span>
                 </div>
                 <div class="cell">
-                    <span class="label">TargetPrice(Target/Close)</span>
+                    <span class="label">Target_Price(Target/Close)</span>
                     <span class="value">{target_price_val} <span class="{diff_color_class}" style="font-size: 9pt;">({diff_val})</span></span>
                 </div>
                 <div class="cell">
-                    <span class="label">YesterdayVoL</span>
+                    <span class="label">Yesterday_VoL</span>
                     <span class="value">{s['volume']}</span>
                 </div>
                 <div class="cell">
-                    <span class="label">TrendPrice(Close/Avg)</span>
+                    <span class="label">Trend_Price(Close/Avg)</span>
                     <span class="value {val_class}">{trend_text}</span>
                 </div>
             </div>

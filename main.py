@@ -1,4 +1,3 @@
-Python
 import base64
 from flask import Flask, jsonify, render_template_string, request
 from weasyprint import HTML

@@ -58,7 +58,7 @@ def generate_dashboard():
             close_val = 0
             open_val = 0
 
-        # เงื่อนไขสีของ Close: ถ้าต่ำกว่า Open เป็นแดง, ถ้าสูงกว่าหรือเท่ากับเป็นเขียว
+        # เงื่อนไขสีของ Close และเปอร์เซ็นต์ส่วนต่าง (ถ้าต่ำกว่า Open เป็นแดง, ถ้าสูงกว่าหรือเท่ากับเป็นเขียว)
         close_color_class = "value-down" if close_val < open_val else "value-up"
 
         trend_text = str(s.get('trendPrice', 'UP'))
@@ -71,6 +71,7 @@ def generate_dashboard():
         symbol_val = str(s.get('symbol', '-'))
         open_val_str = str(s.get('open', '-'))
         close_price_val = str(s.get('close', '-'))
+        close_open_diff_val = str(s.get('closeOpenDiff', '+0.00%'))
         target_price_val = str(s.get('targetPrice', '-'))
         diff_val = str(s.get('diff', '0.00%'))
         volume_val = str(s.get('volume', '-'))
@@ -87,7 +88,7 @@ def generate_dashboard():
             </div>
             <div class="cell-item">
                 <span class="label">CLOSE</span>
-                <span class="value {close_color_class}">{close_price_val}</span>
+                <span class="value {close_color_class}">{close_price_val} <span style="font-size: 8pt;">({close_open_diff_val})</span></span>
             </div>
             <div class="cell-item" style="width: 21%;">
                 <span class="label">TARGET_PRICE(TARGET/CLOSE)</span>

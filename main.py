@@ -12,14 +12,14 @@ HTML_TEMPLATE = """
     <style>
         @page {
             size: A4;
-            margin: 10mm;
+            margin: 5mm; /* ลดขอบขาวรอบกระดาษให้เหลือแคบที่สุด */
         }
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background-color: #0d1117;
             color: #ffffff;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
         }
         .header-container {
             display: flex;
@@ -28,11 +28,11 @@ HTML_TEMPLATE = """
             background-color: #161b22;
             padding: 15px 20px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border: 1px solid #30363d;
         }
         .logo-box img {
-            height: 45px;
+            height: 75px;
             object-fit: contain;
         }
         .title-box {
@@ -53,8 +53,8 @@ HTML_TEMPLATE = """
             background-color: #161b22;
             border: 1px solid #30363d;
             border-radius: 8px;
-            padding: 12px 18px;
-            margin-bottom: 10px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -78,10 +78,10 @@ HTML_TEMPLATE = """
             background-color: #da3633;
         }
         .col-symbol {
-            width: 22%;
+            width: 20%;
         }
         .col-symbol .symbol-text {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: bold;
             color: #ffffff;
             display: block;
@@ -98,7 +98,7 @@ HTML_TEMPLATE = """
             margin-bottom: 2px;
         }
         .field-value {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             color: #ffffff;
             display: block;
@@ -137,16 +137,16 @@ HTML_TEMPLATE = """
             
             <div class="{% if is_up %}card-left-border-up{% else %}card-left-border-down{% endif %}"></div>
 
-            <div class="col-symbol" style="padding-left: 10px;">
+            <div class="col-symbol" style="padding-left: 8px;">
                 <span class="symbol-text">{{ stock.symbol }}</span>
             </div>
 
-            <div class="col-field">
+            <div class="col-field" style="width: 12%;">
                 <span class="field-label">OPEN</span>
                 <span class="field-value">{{ stock.open }}</span>
             </div>
 
-            <div class="col-field">
+            <div class="col-field" style="width: 16%;">
                 <span class="field-label">CLOSE</span>
                 <span class="field-value">
                     {{ stock.close }}
@@ -156,7 +156,7 @@ HTML_TEMPLATE = """
                 </span>
             </div>
 
-            <div class="col-field" style="width: 18%;">
+            <div class="col-field" style="width: 19%;">
                 <span class="field-label">TARGET_PRICE(TARGET/CLOSE)</span>
                 <span class="field-value">
                     {{ stock.targetPrice }}
@@ -166,15 +166,15 @@ HTML_TEMPLATE = """
                 </span>
             </div>
 
-            <div class="col-field" style="width: 16%;">
+            <div class="col-field" style="width: 18%;">
                 <span class="field-label">YESTERDAY_VOL</span>
-                <span class="field-value" style="font-size: 12px;">{{ stock.volume }}</span>
+                <span class="field-value" style="font-size: 11px;">{{ stock.volume }}</span>
             </div>
 
-            <div class="col-field" style="width: 14%;">
+            <div class="col-field" style="width: 15%;">
                 <span class="field-label">TREND_PRICE(CLOSE/AVG)</span>
                 <span class="field-value {% if is_up %}text-green{% else %}text-red{% endif %}">
-                    {% if is_up %}🟢{% else %}🔴{% endif %} {{ stock.trendPrice }}
+                    {% if is_up %}▲ Up{% else %}▼ Down{% endif %} {{ stock.trendPrice.replace('Up','').replace('Down','').strip() }}
                 </span>
             </div>
         </div>

@@ -51,13 +51,13 @@ def generate_dashboard():
         </div>
     """
 
+    
     for s in stocks:
-        try:
-            close_val = float(str(s.get('close', '0')).replace(',', ''))
-            open_val = float(str(s.get('open', '0')).replace(',', ''))
-            is_up = close_val >= open_val
-        except:
-            is_up = True
+        trend_text = str(s.get('trendPrice', 'UP'))
+        t_lower = trend_text.lower()
+        
+        # เช็คสถานะ Up / Down จาก trendPrice (Close vs Avg) โดยตรง
+        is_up = ("up" in t_lower) or ("+" in trend_text)
 
         card_class = "card-up" if is_up else "card-down"
         val_class = "value-up" if is_up else "value-down"
@@ -68,7 +68,6 @@ def generate_dashboard():
         target_price_val = str(s.get('targetPrice', '-'))
         diff_val = str(s.get('diff', '0.00%'))
         volume_val = str(s.get('volume', '-'))
-        trend_text = str(s.get('trendPrice', 'UP'))
 
         is_diff_positive = diff_val.startswith("+")
         diff_color_class = "value-down" if is_diff_positive else "value-up"

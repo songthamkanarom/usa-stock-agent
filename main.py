@@ -12,7 +12,7 @@ HTML_TEMPLATE = """
     <style>
         @page {
             size: A4;
-            margin: 5mm; /* ลดขอบขาวรอบกระดาษให้เหลือแคบที่สุด */
+            margin: 0; /* ตัดขอบขาวรอบกระดาษออกทั้งหมด */
         }
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -27,12 +27,12 @@ HTML_TEMPLATE = """
             align-items: center;
             background-color: #161b22;
             padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            border-radius: 6px;
+            margin-bottom: 12px;
             border: 1px solid #30363d;
         }
         .logo-box img {
-            height: 75px;
+            height: 95px; /* เพิ่มขนาดโลโก้ให้ใหญ่ขึ้น */
             object-fit: contain;
         }
         .title-box {
@@ -52,8 +52,8 @@ HTML_TEMPLATE = """
         .card {
             background-color: #161b22;
             border: 1px solid #30363d;
-            border-radius: 8px;
-            padding: 12px 15px;
+            border-radius: 6px;
+            padding: 10px 15px;
             margin-bottom: 8px;
             display: flex;
             align-items: center;
@@ -96,6 +96,7 @@ HTML_TEMPLATE = """
             text-transform: uppercase;
             display: block;
             margin-bottom: 2px;
+            text-align: right; /* จัดหัวข้อชิดขวาตรงกับตัวเลข */
         }
         .field-value {
             font-size: 12px;

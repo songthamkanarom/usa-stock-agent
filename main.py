@@ -4,7 +4,6 @@ from weasyprint import HTML
 
 app = Flask(__name__)
 
-# HTML Template (Dark Theme Cards พร้อมใส่สีให้ % Target)
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="th">
@@ -186,33 +185,31 @@ HTML_TEMPLATE = """
 </html>
 """
 
-
 @app.route("/", methods=["POST"])
 def generate_pdf():
-  try:
-    data = request.get_json()
-    if not data:
-      return (
-          jsonify({"status": "error", "message": "No JSON payload provided"}),
-          400,
-      )
-
-    date_str = data.get("date", "")
-    logo_base64 = data.get("logo", "")
-    stocks = data.get("stocks", [])
-
-    rendered_html = render_template_string(
-        HTML_TEMPLATE, date=date_str, logo=logo_base64, stocks=stocks
-    )
-
-    pdf_bytes = HTML(string=rendered_html).write_pdf()
-    pdf_base64 = base64.b64encode(pdf_bytes).decode("utf-8")
-
-    return jsonify({"status": "success", "pdf_base64": pdf_base64})
-
-  except Exception as e:
-    return jsonify({"status": "error", "message": str(e)}), 500
-
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"status": "error", "message": "No JSON payload provided"}), 400
+        
+        date_str = data.get("date", "")
+        logo_base64 = data.get("logo", "")
+        stocks = data.get("stocks", [])
+        
+        rendered_html = render_template_string(
+            HTML_TEMPLATE, 
+            date=date_str, 
+            logo=logo_base64, 
+            stocks=stocks
+        )
+        
+        pdf_bytes = HTML(string=rendered_html).write_pdf()
+        pdf_base64 = base64.b64encode(pdf_bytes).decode('utf-8')
+        
+        return jsonify({"status": "success", "pdf_base64": pdf_base64})
+        
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == "__main__":
-  app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000)

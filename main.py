@@ -53,10 +53,18 @@ def generate_dashboard():
 
     
     for s in stocks:
+        try:
+            close_val = float(str(s.get('close', '0')).replace(',', ''))
+            open_val = float(str(s.get('open', '0')).replace(',', ''))
+        except:
+            close_val = 0
+            open_val = 0
+
+        # เงื่อนไขสีของ Close: ถ้าต่ำกว่า Open เป็นแดง, ถ้าสูงกว่าหรือเท่ากับเป็นเขียว
+        close_color_class = "value-down" if close_val < open_val else "value-up"
+
         trend_text = str(s.get('trendPrice', 'UP'))
         t_lower = trend_text.lower()
-        
-        # เช็คสถานะ Up / Down จาก trendPrice (Close vs Avg) โดยตรง
         is_up = ("up" in t_lower) or ("+" in trend_text)
 
         card_class = "card-up" if is_up else "card-down"
@@ -81,7 +89,7 @@ def generate_dashboard():
             </div>
             <div class="cell-item">
                 <span class="label">CLOSE</span>
-                <span class="value">{close_price_val}</span>
+                <span class="value {close_color_class}">{close_price_val}</span>
             </div>
             <div class="cell-item" style="width: 21%;">
                 <span class="label">TARGET_PRICE(TARGET/CLOSE)</span>
@@ -97,7 +105,6 @@ def generate_dashboard():
             </div>
         </div>
         """
-
     html_content += """
         <div class="footer">CONFIDENTIAL & PROPRIETARY • QUANTITATIVE DASHBOARD SYSTEM</div>
     </body>

@@ -161,7 +161,7 @@ HTML_TEMPLATE = """
 
             <!-- 4. TARGET PRICE -->
             <div class="col-field" style="width: 16%;">
-                <span class="field-label">TARGET PRICE</span>
+                <span class="field-label">TargetPrice/Close</span>
                 <span class="field-value">
                     {{ stock.targetPrice }}
                     <span style="font-size: 9px; font-weight: normal;" class="{% if '-' in stock.diff %}text-red{% else %}text-green{% endif %}">
@@ -178,7 +178,7 @@ HTML_TEMPLATE = """
 
             <!-- 6. TREND PRICE -->
             <div class="col-field" style="width: 12%;">
-                <span class="field-label">TREND PRICE</span>
+                <span class="field-label">TrendPrice/Avg</span>
                 <span class="field-value {% if is_up %}text-green{% else %}text-red{% endif %}">
                     {% if is_up %}▲ Up{% else %}▼ Down{% endif %} {{ stock.trendPrice.replace('Up','').replace('Down','').strip() }}
                 </span>

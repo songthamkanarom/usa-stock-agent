@@ -12,7 +12,7 @@ HTML_TEMPLATE = """
     <style>
         @page {
             size: A4;
-            margin: 0; /* ตัดขอบขาวรอบกระดาษออกทั้งหมด */
+            margin: 0;
         }
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -32,7 +32,7 @@ HTML_TEMPLATE = """
             border: 1px solid #30363d;
         }
         .logo-box img {
-            height: 95px; /* เพิ่มขนาดโลโก้ให้ใหญ่ขึ้น */
+            height: 95px;
             object-fit: contain;
         }
         .title-box {
@@ -53,7 +53,7 @@ HTML_TEMPLATE = """
             background-color: #161b22;
             border: 1px solid #30363d;
             border-radius: 6px;
-            padding: 10px 15px;
+            padding: 10px 12px;
             margin-bottom: 8px;
             display: flex;
             align-items: center;
@@ -78,28 +78,27 @@ HTML_TEMPLATE = """
             background-color: #da3633;
         }
         .col-symbol {
-            width: 20%;
+            width: 15%;
         }
         .col-symbol .symbol-text {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             color: #ffffff;
             display: block;
         }
         .col-field {
-            width: 15%;
             text-align: right;
         }
         .field-label {
-            font-size: 8px;
+            font-size: 7px;
             color: #8b949e;
             text-transform: uppercase;
             display: block;
             margin-bottom: 2px;
-            text-align: right; /* จัดหัวข้อชิดขวาตรงกับตัวเลข */
+            text-align: right;
         }
         .field-value {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             color: #ffffff;
             display: block;
@@ -138,44 +137,66 @@ HTML_TEMPLATE = """
             
             <div class="{% if is_up %}card-left-border-up{% else %}card-left-border-down{% endif %}"></div>
 
+            <!-- 1. SYMBOL -->
             <div class="col-symbol" style="padding-left: 8px;">
                 <span class="symbol-text">{{ stock.symbol }}</span>
             </div>
 
-            <div class="col-field" style="width: 12%;">
+            <!-- 2. OPEN -->
+            <div class="col-field" style="width: 10%;">
                 <span class="field-label">OPEN</span>
                 <span class="field-value">{{ stock.open }}</span>
             </div>
 
-            <div class="col-field" style="width: 16%;">
+            <!-- 3. CLOSE -->
+            <div class="col-field" style="width: 14%;">
                 <span class="field-label">CLOSE</span>
                 <span class="field-value">
                     {{ stock.close }}
-                    <span style="font-size: 10px; font-weight: normal;" class="{% if '-' in stock.closeOpenDiff %}text-red{% else %}text-green{% endif %}">
+                    <span style="font-size: 9px; font-weight: normal;" class="{% if '-' in stock.closeOpenDiff %}text-red{% else %}text-green{% endif %}">
                         ({{ stock.closeOpenDiff }})
                     </span>
                 </span>
             </div>
 
-            <div class="col-field" style="width: 19%;">
-                <span class="field-label">TARGET_PRICE(TARGET/CLOSE)</span>
+            <!-- 4. TARGET PRICE -->
+            <div class="col-field" style="width: 16%;">
+                <span class="field-label">TARGET PRICE</span>
                 <span class="field-value">
                     {{ stock.targetPrice }}
-                    <span style="font-size: 10px; font-weight: normal;" class="{% if '-' in stock.diff %}text-red{% else %}text-green{% endif %}">
+                    <span style="font-size: 9px; font-weight: normal;" class="{% if '-' in stock.diff %}text-red{% else %}text-green{% endif %}">
                         ({{ stock.diff }})
                     </span>
                 </span>
             </div>
 
-            <div class="col-field" style="width: 18%;">
+            <!-- 5. YESTERDAY VOL -->
+            <div class="col-field" style="width: 13%;">
                 <span class="field-label">YESTERDAY_VOL</span>
-                <span class="field-value" style="font-size: 11px;">{{ stock.volume }}</span>
+                <span class="field-value" style="font-size: 10px;">{{ stock.volume }}</span>
             </div>
 
-            <div class="col-field" style="width: 15%;">
-                <span class="field-label">TREND_PRICE(CLOSE/AVG)</span>
+            <!-- 6. TREND PRICE -->
+            <div class="col-field" style="width: 12%;">
+                <span class="field-label">TREND PRICE</span>
                 <span class="field-value {% if is_up %}text-green{% else %}text-red{% endif %}">
                     {% if is_up %}▲ Up{% else %}▼ Down{% endif %} {{ stock.trendPrice.replace('Up','').replace('Down','').strip() }}
+                </span>
+            </div>
+
+            <!-- 7. SLOPE PRICE (เพิ่มใหม่) -->
+            <div class="col-field" style="width: 10%;">
+                <span class="field-label">SLOPE PRICE</span>
+                <span class="field-value {% if '-' in stock.slopePrice %}text-red{% else %}text-green{% endif %}">
+                    {{ stock.slopePrice }}
+                </span>
+            </div>
+
+            <!-- 8. SLOPE VOL (เพิ่มใหม่) -->
+            <div class="col-field" style="width: 10%;">
+                <span class="field-label">SLOPE VOL</span>
+                <span class="field-value {% if '-' in stock.slopeVol %}text-red{% else %}text-green{% endif %}">
+                    {{ stock.slopeVol }}
                 </span>
             </div>
         </div>

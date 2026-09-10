@@ -178,7 +178,7 @@ HTML_TEMPLATE = """
 
             <!-- 6. TREND PRICE -->
             <div class="col-field" style="width: 12%;">
-                <span class="field-label">TrendPrice/Avg</span>
+                <span class="field-label">ClosePrice/Avg</span>
                 <span class="field-value {% if is_up %}text-green{% else %}text-red{% endif %}">
                     {% if is_up %}▲ Up{% else %}▼ Down{% endif %} {{ stock.trendPrice.replace('Up','').replace('Down','').strip() }}
                 </span>

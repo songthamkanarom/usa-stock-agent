@@ -92,7 +92,7 @@ HTML_TEMPLATE = """
         .field-label {
             font-size: 7px;
             color: #8b949e;
-            text-transform: uppercase;
+            /* ปิดการแปลงตัวพิมพ์ใหญ่ ให้แสดงตามที่เราพิมพ์ */
             display: block;
             margin-bottom: 2px;
             text-align: right;
@@ -131,26 +131,26 @@ HTML_TEMPLATE = """
         {% for stock in stocks %}
         <div class="card">
             {% set is_up = true %}
-            {% if '-' in stock.trendPrice or 'Down' in stock.trendPrice %}
+            {% if '-' in stock.trendPrice %}
                 {% set is_up = false %}
             {% endif %}
             
             <div class="{% if is_up %}card-left-border-up{% else %}card-left-border-down{% endif %}"></div>
 
-            <!-- 1. SYMBOL -->
+            <!-- SYMBOL -->
             <div class="col-symbol" style="padding-left: 8px;">
                 <span class="symbol-text">{{ stock.symbol }}</span>
             </div>
 
-            <!-- 2. OPEN -->
+            <!-- OPEN -->
             <div class="col-field" style="width: 10%;">
-                <span class="field-label">OPEN</span>
+                <span class="field-label">Open</span>
                 <span class="field-value">{{ stock.open }}</span>
             </div>
 
-            <!-- 3. CLOSE -->
+            <!-- CLOSE -->
             <div class="col-field" style="width: 14%;">
-                <span class="field-label">CLOSE</span>
+                <span class="field-label">Close</span>
                 <span class="field-value">
                     {{ stock.close }}
                     <span style="font-size: 9px; font-weight: normal;" class="{% if '-' in stock.closeOpenDiff %}text-red{% else %}text-green{% endif %}">
@@ -159,9 +159,9 @@ HTML_TEMPLATE = """
                 </span>
             </div>
 
-            <!-- 4. TARGET PRICE -->
+            <!-- TARGET PRICE -->
             <div class="col-field" style="width: 16%;">
-                <span class="field-label">TargetPrice/Close</span>
+                <span class="field-label">Target Price</span>
                 <span class="field-value">
                     {{ stock.targetPrice }}
                     <span style="font-size: 9px; font-weight: normal;" class="{% if '-' in stock.diff %}text-red{% else %}text-green{% endif %}">
@@ -170,31 +170,31 @@ HTML_TEMPLATE = """
                 </span>
             </div>
 
-            <!-- 5. YESTERDAY VOL -->
+            <!-- YESTERDAY VOL -->
             <div class="col-field" style="width: 13%;">
-                <span class="field-label">YESTERDAY_VOL</span>
+                <span class="field-label">Yesterday Vol</span>
                 <span class="field-value" style="font-size: 10px;">{{ stock.volume }}</span>
             </div>
 
-            <!-- 6. TREND PRICE -->
+            <!-- TREND PRICE -->
             <div class="col-field" style="width: 12%;">
-                <span class="field-label">ClosePrice/Avg</span>
-                <span class="field-value {% if is_up %}text-green{% else %}text-red{% endif %}">
-                    {% if is_up %}▲ Up{% else %}▼ Down{% endif %} {{ stock.trendPrice.replace('Up','').replace('Down','').strip() }}
+                <span class="field-label">Close Price / Avg</span>
+                <span class="field-value {% if '-' in stock.trendPrice %}text-red{% else %}text-green{% endif %}">
+                    {% if '-' in stock.trendPrice %}▼{% else %}▲{% endif %} {{ stock.trendPrice }}
                 </span>
             </div>
 
-            <!-- 7. SLOPE PRICE (เพิ่มใหม่) -->
+            <!-- SLOPE PRICE -->
             <div class="col-field" style="width: 10%;">
-                <span class="field-label">SLOPE PRICE</span>
+                <span class="field-label">Slope Price</span>
                 <span class="field-value {% if '-' in stock.slopePrice %}text-red{% else %}text-green{% endif %}">
                     {{ stock.slopePrice }}
                 </span>
             </div>
 
-            <!-- 8. SLOPE VOL (เพิ่มใหม่) -->
+            <!-- SLOPE VOL -->
             <div class="col-field" style="width: 10%;">
-                <span class="field-label">SLOPE VOL</span>
+                <span class="field-label">Slope Vol</span>
                 <span class="field-value {% if '-' in stock.slopeVol %}text-red{% else %}text-green{% endif %}">
                     {{ stock.slopeVol }}
                 </span>

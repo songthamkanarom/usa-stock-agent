@@ -92,7 +92,7 @@ HTML_TEMPLATE = """
         .field-label {
             font-size: 7px;
             color: #8b949e;
-         /*   text-transform: uppercase;
+            text-transform: uppercase;
             display: block;
             margin-bottom: 2px;
             text-align: right;

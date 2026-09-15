@@ -186,7 +186,7 @@ HTML_TEMPLATE = """
 
             <!-- SLOPE PRICE -->
             <div class="col-field" style="width: 10%;">
-                <span class="field-label">Slope Price(7D)</span>
+                <span class="field-label">Slope Price(30D)</span>
                 <span class="field-value {% if '-' in stock.slopePrice %}text-red{% else %}text-green{% endif %}">
                     {{ stock.slopePrice }}
                 </span>
@@ -194,7 +194,7 @@ HTML_TEMPLATE = """
 
             <!-- SLOPE VOL -->
             <div class="col-field" style="width: 10%;">
-                <span class="field-label">Slope Vol(7D)</span>
+                <span class="field-label">Slope Vol(30D)</span>
                 <span class="field-value {% if '-' in stock.slopeVol %}text-red{% else %}text-green{% endif %}">
                     {{ stock.slopeVol }}
                 </span>

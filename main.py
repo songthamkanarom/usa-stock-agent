@@ -11,7 +11,7 @@ HTML_TEMPLATE = """
     <meta charset="UTF-8">
     <style>
         @page {
-            size: A0; /* 📌 เปลี่ยนเป็นขนาด A0 สำหรับดูบนคอมพิวเตอร์ */
+            size: 1920px 2400px; /* 📌 ปรับขนาดให้เหมาะกับหน้าจอคอมพิวเตอร์ ไม่ต้องซูม 250% */
             margin: 0;
         }
         body {
@@ -19,20 +19,20 @@ HTML_TEMPLATE = """
             background-color: #0d1117;
             color: #ffffff;
             margin: 0;
-            padding: 25px;
+            padding: 30px;
         }
         .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background-color: #161b22;
-            padding: 30px 40px;
-            border-radius: 12px;
-            margin-bottom: 25px;
+            padding: 35px 45px;
+            border-radius: 14px;
+            margin-bottom: 30px;
             border: 2px solid #30363d;
         }
         .logo-box img {
-            height: 180px; /* ขยายโลโก้ */
+            height: 140px;
             object-fit: contain;
         }
         .title-box {
@@ -40,21 +40,21 @@ HTML_TEMPLATE = """
         }
         .title-box h1 {
             margin: 0;
-            font-size: 48px; /* ขยายหัวข้อใหญ่ */
+            font-size: 52px;
             letter-spacing: 2px;
             color: #ffffff;
         }
         .title-box p {
             margin: 10px 0 0 0;
-            font-size: 24px;
+            font-size: 26px;
             color: #8b949e;
         }
         .card {
             background-color: #161b22;
             border: 2px solid #30363d;
-            border-radius: 12px;
-            padding: 25px 30px;
-            margin-bottom: 18px;
+            border-radius: 14px;
+            padding: 28px 35px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -66,7 +66,7 @@ HTML_TEMPLATE = """
             left: 0;
             top: 0;
             bottom: 0;
-            width: 12px;
+            width: 14px;
             background-color: #238636;
         }
         .card-left-border-down {
@@ -74,14 +74,14 @@ HTML_TEMPLATE = """
             left: 0;
             top: 0;
             bottom: 0;
-            width: 12px;
+            width: 14px;
             background-color: #da3633;
         }
         .col-symbol {
             width: 13%;
         }
         .col-symbol .symbol-text {
-            font-size: 32px; /* ขยายชื่อหุ้น */
+            font-size: 34px;
             font-weight: bold;
             color: #ffffff;
             display: block;
@@ -90,14 +90,14 @@ HTML_TEMPLATE = """
             text-align: right;
         }
         .field-label {
-            font-size: 18px; /* ขยายชื่อหัวข้อคอลัมน์ */
+            font-size: 20px;
             color: #8b949e;
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             text-align: right;
         }
         .field-value {
-            font-size: 26px; /* ขยายตัวเลขตัวหลัก */
+            font-size: 30px;
             font-weight: bold;
             color: #ffffff;
             display: block;
@@ -109,7 +109,7 @@ HTML_TEMPLATE = """
             color: #f85149 !important;
         }
         .btn-link {
-            font-size: 22px; /* ขยายปุ่ม Chart */
+            font-size: 26px;
             color: #58a6ff;
             text-decoration: none;
             font-weight: bold;
@@ -123,7 +123,7 @@ HTML_TEMPLATE = """
             {% if logo %}
                 <img src="{{ logo }}" alt="Logo">
             {% else %}
-                <h2 style="margin:0; color:#fff; font-size:36px;">TANGMO ADVISOR</h2>
+                <h2 style="margin:0; color:#fff; font-size:40px;">TANGMO ADVISOR</h2>
             {% endif %}
         </div>
         <div class="title-box">
@@ -142,12 +142,12 @@ HTML_TEMPLATE = """
             
             <div class="{% if is_up %}card-left-border-up{% else %}card-left-border-down{% endif %}"></div>
 
-            <!-- SYMBOL -->
+            <!-- 1. SYMBOL -->
             <div class="col-symbol" style="padding-left: 15px;">
                 <span class="symbol-text">{{ stock.symbol }}</span>
             </div>
 
-            <!-- GRAPH / TV LINK -->
+            <!-- 2. TRADINGVIEW LINK -->
             <div class="col-field" style="width: 8%;">
                 <span class="field-label">TradingView</span>
                 <span class="field-value">
@@ -159,57 +159,49 @@ HTML_TEMPLATE = """
                 </span>
             </div>
 
-            <!-- OPEN -->
+            <!-- 3. OPEN -->
             <div class="col-field" style="width: 8%;">
                 <span class="field-label">Open</span>
                 <span class="field-value">{{ stock.open }}</span>
             </div>
 
-            <!-- CLOSE -->
-            <div class="col-field" style="width: 12%;">
+            <!-- 4. CLOSE -->
+            <div class="col-field" style="width: 13%;">
                 <span class="field-label">Close</span>
                 <span class="field-value">
                     {{ stock.close }}
-                    <span style="font-size: 20px; font-weight: normal;" class="{% if '-' in stock.closeOpenDiff %}text-red{% else %}text-green{% endif %}">
+                    <span style="font-size: 22px; font-weight: normal;" class="{% if '-' in stock.closeOpenDiff %}text-red{% else %}text-green{% endif %}">
                         ({{ stock.closeOpenDiff }})
                     </span>
                 </span>
             </div>
 
-            <!-- FIBONACCI 61.8% -->
-            <div class="col-field" style="width: 10%;">
-                <span class="field-label">Fib 61.8% (30D)</span>
-                <span class="field-value" style="color: #e3b341;">
-                    {{ stock.fib618 if stock.fib618 else '-' }}
-                </span>
-            </div>
-
-            <!-- TARGET PRICE -->
+            <!-- 5. TARGET PRICE -->
             <div class="col-field" style="width: 14%;">
                 <span class="field-label">Target Price/Close</span>
                 <span class="field-value">
                     {{ stock.targetPrice }}
-                    <span style="font-size: 20px; font-weight: normal;" class="{% if '-' in stock.diff %}text-red{% else %}text-green{% endif %}">
+                    <span style="font-size: 22px; font-weight: normal;" class="{% if '-' in stock.diff %}text-red{% else %}text-green{% endif %}">
                         ({{ stock.diff }})
                     </span>
                 </span>
             </div>
 
-            <!-- YESTERDAY VOL -->
+            <!-- 6. YESTERDAY VOL -->
             <div class="col-field" style="width: 11%;">
                 <span class="field-label">Yesterday Vol</span>
-                <span class="field-value" style="font-size: 24px;">{{ stock.volume }}</span>
+                <span class="field-value" style="font-size: 26px;">{{ stock.volume }}</span>
             </div>
 
-            <!-- TREND PRICE -->
-            <div class="col-field" style="width: 10%;">
+            <!-- 7. TREND PRICE -->
+            <div class="col-field" style="width: 11%;">
                 <span class="field-label">Close Price/Avg(30D)</span>
                 <span class="field-value {% if '-' in stock.trendPrice %}text-red{% else %}text-green{% endif %}">
                     {% if '-' in stock.trendPrice %}▼{% else %}▲{% endif %} {{ stock.trendPrice }}
                 </span>
             </div>
 
-            <!-- SLOPE PRICE -->
+            <!-- 8. SLOPE PRICE -->
             <div class="col-field" style="width: 8%;">
                 <span class="field-label">Slope Price(30D)</span>
                 <span class="field-value {% if '-' in stock.slopePrice %}text-red{% else %}text-green{% endif %}">
@@ -217,11 +209,19 @@ HTML_TEMPLATE = """
                 </span>
             </div>
 
-            <!-- SLOPE VOL -->
+            <!-- 9. SLOPE VOL -->
             <div class="col-field" style="width: 8%;">
                 <span class="field-label">Slope Vol(30D)</span>
                 <span class="field-value {% if '-' in stock.slopeVol %}text-red{% else %}text-green{% endif %}">
                     {{ stock.slopeVol }}
+                </span>
+            </div>
+
+            <!-- 📌 10. FIBONACCI 61.8% (ย้ายมาไว้ท้ายสุดตามต้องการ) -->
+            <div class="col-field" style="width: 10%;">
+                <span class="field-label">Fib 61.8% (30D)</span>
+                <span class="field-value" style="color: #e3b341;">
+                    {{ stock.fib618 if stock.fib618 else '-' }}
                 </span>
             </div>
         </div>

@@ -11,8 +11,11 @@ HTML_TEMPLATE = """
     <meta charset="UTF-8">
     <style>
         @page {
-            size: 1920px 2400px; /* 📌 ปรับขนาดให้เหมาะกับหน้าจอคอมพิวเตอร์ ไม่ต้องซูม 250% */
+            size: 1920px 2400px;
             margin: 0;
+        }
+        * {
+            box-sizing: border-box;
         }
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -53,7 +56,7 @@ HTML_TEMPLATE = """
             background-color: #161b22;
             border: 2px solid #30363d;
             border-radius: 14px;
-            padding: 28px 35px;
+            padding: 24px 25px 24px 35px;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
@@ -78,29 +81,36 @@ HTML_TEMPLATE = """
             background-color: #da3633;
         }
         .col-symbol {
-            width: 13%;
+            width: 16%;
+            flex-shrink: 0;
         }
         .col-symbol .symbol-text {
-            font-size: 34px;
-            font-weight: bold;
-            color: #ffffff;
-            display: block;
-        }
-        .col-field {
-            text-align: right;
-        }
-        .field-label {
-            font-size: 20px;
-            color: #8b949e;
-            display: block;
-            margin-bottom: 8px;
-            text-align: right;
-        }
-        .field-value {
             font-size: 30px;
             font-weight: bold;
             color: #ffffff;
             display: block;
+            white-space: nowrap;
+        }
+        .col-field {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .field-label {
+            font-size: 16px;
+            color: #8b949e;
+            display: block;
+            margin-bottom: 6px;
+            text-align: right;
+            white-space: nowrap;
+        }
+        .field-value {
+            font-size: 26px;
+            font-weight: bold;
+            color: #ffffff;
+            display: block;
+            white-space: nowrap;
         }
         .text-green {
             color: #3fb950 !important;
@@ -109,7 +119,7 @@ HTML_TEMPLATE = """
             color: #f85149 !important;
         }
         .btn-link {
-            font-size: 26px;
+            font-size: 24px;
             color: #58a6ff;
             text-decoration: none;
             font-weight: bold;
@@ -142,13 +152,13 @@ HTML_TEMPLATE = """
             
             <div class="{% if is_up %}card-left-border-up{% else %}card-left-border-down{% endif %}"></div>
 
-            <!-- 1. SYMBOL -->
-            <div class="col-symbol" style="padding-left: 15px;">
+            <!-- 1. SYMBOL (16%) -->
+            <div class="col-symbol">
                 <span class="symbol-text">{{ stock.symbol }}</span>
             </div>
 
-            <!-- 2. TRADINGVIEW LINK -->
-            <div class="col-field" style="width: 8%;">
+            <!-- 2. TRADINGVIEW LINK (6%) -->
+            <div class="col-field" style="width: 6%;">
                 <span class="field-label">TradingView</span>
                 <span class="field-value">
                     {% if stock.tvUrl %}
@@ -159,41 +169,41 @@ HTML_TEMPLATE = """
                 </span>
             </div>
 
-            <!-- 3. OPEN -->
-            <div class="col-field" style="width: 8%;">
+            <!-- 3. OPEN (7%) -->
+            <div class="col-field" style="width: 7%;">
                 <span class="field-label">Open</span>
                 <span class="field-value">{{ stock.open }}</span>
             </div>
 
-            <!-- 4. CLOSE -->
-            <div class="col-field" style="width: 13%;">
+            <!-- 4. CLOSE (11%) -->
+            <div class="col-field" style="width: 11%;">
                 <span class="field-label">Close</span>
                 <span class="field-value">
                     {{ stock.close }}
-                    <span style="font-size: 22px; font-weight: normal;" class="{% if '-' in stock.closeOpenDiff %}text-red{% else %}text-green{% endif %}">
+                    <span style="font-size: 18px; font-weight: normal;" class="{% if '-' in stock.closeOpenDiff %}text-red{% else %}text-green{% endif %}">
                         ({{ stock.closeOpenDiff }})
                     </span>
                 </span>
             </div>
 
-            <!-- 5. TARGET PRICE -->
-            <div class="col-field" style="width: 14%;">
+            <!-- 5. TARGET PRICE (13%) -->
+            <div class="col-field" style="width: 13%;">
                 <span class="field-label">Target Price/Close</span>
                 <span class="field-value">
                     {{ stock.targetPrice }}
-                    <span style="font-size: 22px; font-weight: normal;" class="{% if '-' in stock.diff %}text-red{% else %}text-green{% endif %}">
+                    <span style="font-size: 18px; font-weight: normal;" class="{% if '-' in stock.diff %}text-red{% else %}text-green{% endif %}">
                         ({{ stock.diff }})
                     </span>
                 </span>
             </div>
 
-            <!-- 6. YESTERDAY VOL -->
-            <div class="col-field" style="width: 11%;">
+            <!-- 6. YESTERDAY VOL (13%) -->
+            <div class="col-field" style="width: 13%;">
                 <span class="field-label">Yesterday Vol</span>
-                <span class="field-value" style="font-size: 26px;">{{ stock.volume }}</span>
+                <span class="field-value" style="font-size: 22px;">{{ stock.volume }}</span>
             </div>
 
-            <!-- 7. TREND PRICE -->
+            <!-- 7. TREND PRICE (11%) -->
             <div class="col-field" style="width: 11%;">
                 <span class="field-label">Close Price/Avg(30D)</span>
                 <span class="field-value {% if '-' in stock.trendPrice %}text-red{% else %}text-green{% endif %}">
@@ -201,24 +211,24 @@ HTML_TEMPLATE = """
                 </span>
             </div>
 
-            <!-- 8. SLOPE PRICE -->
-            <div class="col-field" style="width: 8%;">
+            <!-- 8. SLOPE PRICE (7%) -->
+            <div class="col-field" style="width: 7%;">
                 <span class="field-label">Slope Price(30D)</span>
                 <span class="field-value {% if '-' in stock.slopePrice %}text-red{% else %}text-green{% endif %}">
                     {{ stock.slopePrice }}
                 </span>
             </div>
 
-            <!-- 9. SLOPE VOL -->
-            <div class="col-field" style="width: 8%;">
+            <!-- 9. SLOPE VOL (7%) -->
+            <div class="col-field" style="width: 7%;">
                 <span class="field-label">Slope Vol(30D)</span>
                 <span class="field-value {% if '-' in stock.slopeVol %}text-red{% else %}text-green{% endif %}">
                     {{ stock.slopeVol }}
                 </span>
             </div>
 
-            <!-- 📌 10. FIBONACCI 61.8% (ย้ายมาไว้ท้ายสุดตามต้องการ) -->
-            <div class="col-field" style="width: 10%;">
+            <!-- 10. FIBONACCI 61.8% (9%) -->
+            <div class="col-field" style="width: 9%;">
                 <span class="field-label">Fib 61.8% (30D)</span>
                 <span class="field-value" style="color: #e3b341;">
                     {{ stock.fib618 if stock.fib618 else '-' }}

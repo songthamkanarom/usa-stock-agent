@@ -78,7 +78,7 @@ HTML_TEMPLATE = """
             background-color: #da3633;
         }
         .col-symbol {
-            width: 15%;
+            width: 13%;
         }
         .col-symbol .symbol-text {
             font-size: 13px;
@@ -92,7 +92,6 @@ HTML_TEMPLATE = """
         .field-label {
             font-size: 7px;
             color: #8b949e;
-            /* ปิดการแปลงตัวพิมพ์ใหญ่ ให้แสดงตามที่เราพิมพ์ */
             display: block;
             margin-bottom: 2px;
             text-align: right;
@@ -108,6 +107,12 @@ HTML_TEMPLATE = """
         }
         .text-red {
             color: #f85149 !important;
+        }
+        .btn-link {
+            font-size: 9px;
+            color: #58a6ff;
+            text-decoration: none;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -142,14 +147,26 @@ HTML_TEMPLATE = """
                 <span class="symbol-text">{{ stock.symbol }}</span>
             </div>
 
+            <!-- 📌 GRAPH / TV LINK (เพิ่มใหม่ ดึงจาก Col N) -->
+            <div class="col-field" style="width: 9%;">
+                <span class="field-label">TradingView</span>
+                <span class="field-value">
+                    {% if stock.tvUrl %}
+                        <a href="{{ stock.tvUrl }}" class="btn-link">📊 Chart</a>
+                    {% else %}
+                        -
+                    {% endif %}
+                </span>
+            </div>
+
             <!-- OPEN -->
-            <div class="col-field" style="width: 10%;">
+            <div class="col-field" style="width: 9%;">
                 <span class="field-label">Open</span>
                 <span class="field-value">{{ stock.open }}</span>
             </div>
 
             <!-- CLOSE -->
-            <div class="col-field" style="width: 14%;">
+            <div class="col-field" style="width: 13%;">
                 <span class="field-label">Close</span>
                 <span class="field-value">
                     {{ stock.close }}
@@ -160,7 +177,7 @@ HTML_TEMPLATE = """
             </div>
 
             <!-- TARGET PRICE -->
-            <div class="col-field" style="width: 16%;">
+            <div class="col-field" style="width: 15%;">
                 <span class="field-label">Target Price/Close</span>
                 <span class="field-value">
                     {{ stock.targetPrice }}
@@ -171,13 +188,13 @@ HTML_TEMPLATE = """
             </div>
 
             <!-- YESTERDAY VOL -->
-            <div class="col-field" style="width: 13%;">
+            <div class="col-field" style="width: 12%;">
                 <span class="field-label">Yesterday Vol</span>
                 <span class="field-value" style="font-size: 10px;">{{ stock.volume }}</span>
             </div>
 
             <!-- TREND PRICE -->
-            <div class="col-field" style="width: 12%;">
+            <div class="col-field" style="width: 11%;">
                 <span class="field-label">Close Price/Avg(30D)</span>
                 <span class="field-value {% if '-' in stock.trendPrice %}text-red{% else %}text-green{% endif %}">
                     {% if '-' in stock.trendPrice %}▼{% else %}▲{% endif %} {{ stock.trendPrice }}
@@ -185,7 +202,7 @@ HTML_TEMPLATE = """
             </div>
 
             <!-- SLOPE PRICE -->
-            <div class="col-field" style="width: 10%;">
+            <div class="col-field" style="width: 9%;">
                 <span class="field-label">Slope Price(30D)</span>
                 <span class="field-value {% if '-' in stock.slopePrice %}text-red{% else %}text-green{% endif %}">
                     {{ stock.slopePrice }}
@@ -193,7 +210,7 @@ HTML_TEMPLATE = """
             </div>
 
             <!-- SLOPE VOL -->
-            <div class="col-field" style="width: 10%;">
+            <div class="col-field" style="width: 9%;">
                 <span class="field-label">Slope Vol(30D)</span>
                 <span class="field-value {% if '-' in stock.slopeVol %}text-red{% else %}text-green{% endif %}">
                     {{ stock.slopeVol }}

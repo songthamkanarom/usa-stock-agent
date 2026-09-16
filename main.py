@@ -152,7 +152,7 @@ HTML_TEMPLATE = """
                 <span class="field-label">TradingView</span>
                 <span class="field-value">
                     {% if stock.tvUrl %}
-                        <a href="{{ stock.tvUrl }}" class="btn-link">📊 Chart</a>
+                        <a href="{{ stock.tvUrl }}" class="btn-link">Chart</a>
                     {% else %}
                         -
                     {% endif %}
